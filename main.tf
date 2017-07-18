@@ -64,13 +64,6 @@ resource "aws_security_group" "sovrin" {
   description = "Allow inbound tcp on ports 9722 and 9711"
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["128.187.116.26/32"]
-  }
-
-  ingress {
     from_port        = 9722
     to_port          = 9722
     protocol         = "tcp"
