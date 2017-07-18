@@ -32,35 +32,18 @@ resource "aws_key_pair" "validator" {
   public_key = "${tls_private_key.default.public_key_openssh}"
 }
 
+module "cloud_config" {
+  source = "./cloud-config"
+}
+
 resource "aws_instance" "validator" {
   ami             = "${data.aws_ami.ubuntu.id}"
   instance_type   = "${var.instance_size}"
   security_groups = ["${aws_security_group.sovrin.id}"]
   subnet_id       = "${var.subnet_id}"
   key_name        = "${aws_key_pair.validator.key_name}"
-
-  provisioner "remote-exec" {
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = "${tls_private_key.default.private_key_pem}"
-    }
-
-    inline = [
-      "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 68DB5E88",
-      "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BD33704C",
-      "sudo apt update",
-      "DEBIAN_FRONTEND=noninteractive sudo apt-get install -yq software-properties-common python-software-properties",
-      "sudo add-apt-repository \"deb https://repo.evernym.com/deb xenial stable\"",
-      "sudo add-apt-repository \"deb https://repo.sovrin.org/deb xenial stable\"",
-      "sudo apt update",
-      "DEBIAN_FRONTEND=noninteractive sudo apt install -yq debsigs debsig-verify apt-transport-https python-pip python3-pip python3.5-dev libsodium18 sovrin-node",
-      "sudo systemctl enable sovrin-node.service",
-      "sudo systemctl status sovrin-node.service",
-    ]
-  }
-
-  tags = "${merge(var.tags,var.required_tags, map("name", format("%s", var.name)))}"
+  user_data       = "${module.cloud_config.rendered}"
+  tags            = "${merge(var.tags,var.required_tags, map("name", format("%s", var.name)))}"
 }
 
 resource "aws_efs_file_system" "default" {

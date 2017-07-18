@@ -1,0 +1,32 @@
+#cloud-config
+
+apt:
+  preserve_sources_list: true
+  sources:
+    evernym-ppa.list:
+      source: "deb https://repo.evernym.com/deb xenial stable"
+      keyid: 68DB5E88
+    sovrin-ppa.list:
+      source: "deb https://repo.sovrin.org/deb xenial stable"
+      keyid: BD33704C
+
+packages:
+  - debsigs
+  - debsig-verify
+  - apt-transport-https
+  - python-pip
+  - python3-pip
+  - python3.5-dev
+  - libsodium18
+  - sovrin-node
+
+timezone: US/Mountain
+
+ntp: true
+
+runcmd:
+  - [ systemctl, enable, sovrin-node.service ]
+  - [ systemctl, start, sovrin-node.service ]
+
+cc_ready_cmd: 
+  - [ systemctl, status, sovrin-node.service ]
