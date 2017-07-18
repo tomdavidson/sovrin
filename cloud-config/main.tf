@@ -9,7 +9,7 @@ variable "restart_window" {
 }
 
 data "template_file" "auto_updates" {
-  template = "${file("${path.module}/auto-security-updates-config.yaml.tpl")}"
+  template = "${file("${path.module}/auto-security-updates.yaml.tpl")}"
 
   vars {
     restart_window = "${var.restart_window_seed%var.restart_window}"
@@ -28,7 +28,7 @@ data "template_cloudinit_config" "config" {
 
   part {
     content_type = "text/cloud-config"
-    content      = "${file("${path.module}/sovrin-config.yaml")}"
+    content      = "${file("${path.module}/sovrin.yaml")}"
     merge_type   = "list(append)+dict(recurse_array)+str()"
   }
 

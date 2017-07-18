@@ -21,9 +21,9 @@ write_files:
     permissions: '0644'
     content: |
       Unattended-Upgrade::Allowed-Origins {
-      //  "${distro_id}:${distro_codename}";
-      //  "${distro_id}:${distro_codename}-updates";
-          "${distro_id}:${distro_codename}-security";
+      //  "$${distro_id}:$${distro_codename}";
+      //  "$${distro_id}:$${distro_codename}-updates";
+          "$${distro_id}:$${distro_codename}-security";
       };
 
       Unattended-Upgrade::Remove-Unused-Dependencies "false";
