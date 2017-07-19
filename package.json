@@ -1,0 +1,19 @@
+{
+  "name": "sovrin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "lint": "fnlint -c other/fnlint.json && ./other/tf-format.sh",
+    "test:commit": "./other/tf-validate.sh",
+    "test": "npm run lint && npm run test:commit",
+    "version": "standard-version",
+    "release": "git push --follow-tags origin master && conventional-gitlab-releaser -p angular",
+    "commitmsg": "commitlint --extends @commitlint/config-angular -e",
+    "precommit": "lint-staged",
+    "prepush": "npm run test"
+  },
+  "devDependencies": {
+    "@td7x/convr": "^0.3.1",
+    "fnlint": "^1.3.0"
+  }
+}

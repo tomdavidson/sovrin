@@ -1,26 +1,22 @@
-variable "instance_size" {
-  default     = "t2.small"
-  description = "Size of the EC2 instance"
+variable "app_name" {
+  type        = "string"
+  description = "Name of the named resources"
 }
 
-variable "name" {
-  default = "sovrin"
-}
+variable "description" {
+  default = ""
 
-variable "required_tags" {
-  type = "map"
-
-  default = {
-    "provisioner" = "terraform"
-  }
+  description = <<EOF
+(Optional)
+Short description of the Application.
+EOF
 }
 
 variable "tags" {
-  type = "map"
-
   default = {}
-}
 
-variable "subnet_id" {
-  default = "subnet-42e7a226"
+  description = <<EOF
+(Optional)
+A set of tags to apply to the Application's taggable reasouces. 
+EOF
 }

@@ -1,0 +1,14 @@
+{
+  "src/**/*.tf": [
+    "./other/tf-format.sh",
+    "git add"
+  ],
+  "**/*.{ts|js|json}": [
+    "prettier --write",
+    "git add"
+  ],
+  ".gitlab-ci.yml": [
+    "gitlab-ci-lint"
+  ]
+}
+

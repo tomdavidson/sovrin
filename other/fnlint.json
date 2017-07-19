@@ -1,0 +1,6 @@
+{
+  "basePath": ".",
+  "files": "!(.github|.gitlab|CHANGELOG.md|README.md|CONTRIBUTING.md|node_modules)|**/*",
+  "format": "kebabcase",
+  "directories": true
+}

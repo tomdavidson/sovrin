@@ -1,0 +1,9 @@
+machine:
+  timezone:
+    America/Denver
+
+dependencies:
+  pre:
+    - export TERRAFORM_VERSION=0.9.10        && \
+      wget -P /tmp https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+      unzip /tmp/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/bin
